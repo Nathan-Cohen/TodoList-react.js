@@ -6,12 +6,38 @@ class TodoList extends Component {
         super();
         this.state = {
             userInput: '',
-            item: []
-        }
+            items: []
+        };
     }
 
     onChange(event){
-        console.log(event.target.value);
+        this.setState({
+            userInput: event.target.value
+        }, () => console.log(this.state.userInput));
+    }
+
+    renderTodos(){
+        return this.state.items.map((item) => {
+            return (
+                <div key={item}>
+                    {item} | <button onClick={this.deleteTodo.bind(this)}>X</button>
+                </div>
+            );
+        });
+    }
+
+    addTodo(event){
+        event.preventDefault();
+        this.setState({
+            userInput: '',
+            items: [...this.state.items, this.state.userInput]
+        }, () => console.log(this.state));
+    }
+
+    deleteTodo(event){
+        event.preventDefault();
+        const array = this.state.items;
+        
     }
 
     render(){
@@ -22,11 +48,15 @@ class TodoList extends Component {
                 <form>
                     <input 
                         value={this.state.userInput}
-                        type="text" placeholder="Renseigner un item"
-                        onChange={this.Onchange.bind(this)}
+                        type="text" 
+                        placeholder="Renseigner un item"
+                        onChange={this.onChange.bind(this)}
                     />
-                    <button>Ajouter</button>
+                    <button onClick={this.addTodo.bind(this)} >Ajouter</button>
                 </form>
+                <div>
+                    {this.renderTodos()}
+                </div>
             </div>
         );
     }
