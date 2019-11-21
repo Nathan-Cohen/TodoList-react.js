@@ -28,10 +28,14 @@ class TodoList extends Component {
 
     addTodo(event){
         event.preventDefault();
-        this.setState({
-            userInput: '',
-            items: [...this.state.items, this.state.userInput]
-        });
+        // si this.state.userInput n'est pas vide on enregistre la valeur
+        if(this.state.userInput !== ''){
+            this.setState({
+                userInput: '',
+                items: [...this.state.items, this.state.userInput]
+            });
+
+        }
     }
 
     deleteTodo(event){
@@ -42,6 +46,13 @@ class TodoList extends Component {
         this.setState({
             items: array
         });
+    }
+
+    deleteAllTodo(){
+        event.preventDefault();
+        this.setState({
+            items: []
+        })
     }
 
     render(){
@@ -61,6 +72,12 @@ class TodoList extends Component {
                         className="btn btn-primary"
                     >
                         Ajouter
+                    </button>
+                    <button 
+                        onClick={this.deleteAllTodo.bind(this)}
+                        className="btn btn-danger"
+                    >
+                        Tous supprimer
                     </button>
                 </form>
                 <div className="list-group">
